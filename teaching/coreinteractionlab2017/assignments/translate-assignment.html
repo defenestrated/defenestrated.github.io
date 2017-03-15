@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>translate-assignment.html</title>
+
+</head>
+
+<body>
+
+<h1>assignment: two-way translation</h1>
+
+<p><em>deliverable:</em> link to the assignment live on your github emailed to me <br />
+<em>due on:</em> <strong>9am on tuesday, March 28</strong></p>
+
+<hr />
+
+<h3><strong>goal:</strong> update the ASL "translator" example we built in class last week to...</h3>
+
+<ol>
+<li>accommodate any number of letters typed in the text field</li>
+<li>highlight the images that correspond to what's typed in the text field</li>
+<li>setup interaction so that users can spell out words by clicking on images (and output the result)</li>
+</ol>
+
+<hr />
+
+<h3>how to get started:</h3>
+
+<ol>
+<li>Pull the latest changes to <a href="https://github.com/AditiSurana/Core-Interaction">the CI Lab repository</a> by either:
+<ul>
+<li>using terminal to <code>cd</code> into your local copy of the repository and then typing <code>git pull</code></li>
+<li>selecting the repository in github desktop and going to <strong>Repository > Pull</strong> or its keyboard shortcut, <strong>cmd+shift+F</strong></li>
+</ul></li>
+<li>replace the four hard-coded div-image combinations with a grid of 26 divs, one for each letter
+<ul>
+<li>hint: you can make an array of letters by starting with a string and making an array:</li>
+</ul></li>
+</ol>
+
+<p><code>javascript
+var alphabet = "abcdefghijklmnopqrstuvwxyz";
+var letter_array = [];
+for(i = 0; i &lt; alphabet.length; i++) {
+    letter_array.push(alphabet[i]);
+}
+</code>
+something</p>
+
+</body>
+</html>
