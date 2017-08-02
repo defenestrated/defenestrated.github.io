@@ -1,0 +1,68 @@
+@font-face {
+  font-family: "inpt";
+  src: url("../meta/assets/fonts/input-fonts/InputMono-Thin.ttf")
+
+}
+
+body canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.debug {
+  margin: 15px;
+  font-family: "inpt";
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  text-align: right;
+  opacity: 1;
+}
+
+.debug p {
+  margin: 0
+}
+
+.hidden {
+  visibility: hidden;
+}
+.transparent {
+  opacity: 0
+}
+
+.fade {
+  transition: opacity 3s;
+  -webkit-transition: opacity 3s;
+  -moz-transition: opacity 3s;
+  -o-transition: opacity 3s;
+}
+
+/* ------- d3 styles ------- */
+
+#parchment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispedges;
+  font-family: "inpt";
+}
+
+.textline {
+  fill: white;
+  opacity: 0;
+}
+
+.grid {
+  stroke: white;
+}
+.grid .column {
+  opacity: 0.2
+}

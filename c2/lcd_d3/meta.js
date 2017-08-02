@@ -1,0 +1,367 @@
+/*
+c2 live data viz LCD wall for CDA // http://www.newschool.edu/center-for-data-arts/
+written by sam galison // www.samgalison.com
+
+enter command mode: shift + C
+-----------------------------
+key commands:
+r  :  fade out and refresh (DO THIS INSTEAD OF CTRL+R)
+n  :  go fishing for noun phrases (doesn't affect rendering)
+g  :  toggle viewport grid
+
+
+
+*/
+
+'use strict'
+
+var app = app || {}
+
+app.settings = {
+  margins: 100,
+  fontsize: 12,
+  leading: 1.2,
+  speed: 0.01,
+  viewports: (() => {
+    var tupperware = []
+    var numviewports = 4
+    var columns_per_screen = 3
+
+    _(numviewports).times((i) => {
+      var v = new ViewPort(window.innerWidth/4, window.innerHeight, (window.innerWidth/4)*i, i)
+      v.columnify(columns_per_screen)
+      tupperware.push(v)
+    })
+    return tupperware
+  })(),
+  drawGrid: () => {
+    _(app.settings.viewports).each((v) => {
+      v.draw()
+      _(v.columns).each((c) => {c.draw()})
+    })
+  }
+}
+
+app.debug =  {
+  wrapper: document.querySelector(".debug"),
+  meta: document.querySelector("#meta"),
+  base: document.querySelector("#base"),
+  set: function(which, what) {
+    var cl = this.wrapper.classList
+    if (cl.contains("fade"))
+      cl.remove("fade")
+    if (cl.contains("transparent")) {
+      cl.remove("transparent")
+    }
+
+    if (which === "meta") meta.innerHTML = what
+    else if (which === "base") {
+      base.innerHTML = what
+      if (!!what) {
+        cl.add("fade")
+        cl.add("transparent")
+      }
+    }
+
+
+
+  }
+}
+
+app.refresh = function() {
+  app.parchment
+    .transition()
+    .duration(2000)
+    .style("opacity", 0)
+    .on("end", function() {
+      location.reload(true);
+    })
+}
+
+app.state = {
+  cmdmode: false,
+  command: "",
+  texts: [],
+  timers: [],
+  bank: {}
+}
+
+app.scenes = {
+  current: {
+    name: "",
+    container: ""
+  },
+  randomsplatter: {
+    count: 20
+  },
+  runs: {
+    run_count: 0,
+    runboxes: [],
+    masks: [],
+    fade_out_time: 200,
+    launch: function() {
+      app.scenes.preflight()
+      app.scenes.current.name = "test"
+      _(4).times((i) => {
+        var sampled = [_.sample(app.state.bank.cash)]
+        // var pulled = _.pullAt(app.state.bank.cash, 0)
+        app.makerun(i, sampled)
+        // app.makerun(i, _.sample(app.state.bank.cash))
+      })
+    },
+    wrap: function() {
+
+    }
+  },
+  test: {
+    launch: function() {
+      app.scenes.preflight()
+      app.scenes.current.name = "test"
+      _(4).times((i) => {
+        var sampled = [_.sample(app.state.bank.cash)]
+        // var pulled = _.pullAt(app.state.bank.cash, 0)
+        app.makerun(i, sampled)
+        // app.makerun(i, _.sample(app.state.bank.cash))
+      })
+    },
+    wrap: function() {
+
+    }
+  }
+}
+app.scenes.preflight= function() {
+  var container = document.querySelector("g.tg");
+  // console.log(!!container)
+  app.scenes.current.container = (!!container) ? d3.select("g.tg")
+    : app.parchment.append("g")
+    .attr("class", "tg")
+
+  var x = document.querySelectorAll("grid g")
+  if (!!!x.length) app.settings.drawGrid()
+}
+
+app.command = function(event) {
+  // console.log(app.state.cmdmode);
+  event.preventDefault();
+  // console.log(event);
+
+
+  if (app.state.cmdmode) {
+    app.state.cmdmode = false;
+    switch(event.key) {
+    case "r":
+      app.state.command = "refresh"
+      app.refresh()
+      break
+    case "n":
+      app.state.command = "fish noun phrases"
+      client.goFishingIn('Noun Phrases!A2:Z', function(fish) {
+        var done = []
+        var v = fish.values
+            .filter(row => row[0] !== "") // check if approved (col 1)
+            .map(row => row[1])
+        // app.state.bank.cash = randochunker(v, , 10) // grab only the value
+
+        // console.log(app.state.bank.cash)
+        app.state.bank.meta = {
+          name: "noun phrases",
+          longest: _(app.state.bank.cash)
+            .sortBy(s => s.length)
+            .last()
+            .length
+        }
+        // console.log(app.state.bank);
+      })
+      break
+    case "g":
+      app.state.command = "toggle grid"
+      app.settings.grid.classed("hidden", !app.settings.grid.classed("hidden"))
+      break
+    default:
+      app.state.command = "no key mapping for that"
+      console.log("no mapping for that key");
+    }
+
+    app.debug.set("base", app.state.command)
+  }
+
+
+  if (!!event.shiftKey) {
+    if (event.key == "C") app.state.cmdmode = true; // c
+  }
+
+  if (app.state.cmdmode) {
+    app.debug.set("meta", "command:")
+    app.debug.set("base", "")
+  }
+
+}
+app.setScene = function(scene_name, thisfilter) {
+  // console.log(scene_name)
+  switch (scene_name) {
+  case "randomsplatter":
+    client.goFishingIn('Noun Phrases!A2:Z', function(fish) {
+      state.bank.cash = fish.values
+        .filter(row => row[0] !== "") // check if approved (col 1)
+        .map(row => row[1]) // grab only the value
+      state.bank.meta = {
+        name: "noun phrases",
+        longest: _(state.bank.cash)
+          .sortBy(s => s.length)
+          .last()
+          .length
+      }
+      app.scenes.current.name = "randomsplatter"
+    })
+    break
+  case "runs":
+    client.goFishingIn('Noun Phrases!A2:Z', function(fish) {
+      var done = []
+      var v = fish.values
+          .filter(row => row[0] !== "") // check if approved (col 1)
+          .map(row => row[1]) // grab only the value
+      var filtered = thisfilter(v)
+      var out = randochunker(filtered, 3, 12)
+      // console.log(out)
+      app.state.bank.cash = out
+
+      // console.log(app.state.bank.cash)
+      app.state.bank.meta = {
+        name: "noun phrases",
+        longest: _(app.state.bank.cash)
+          .sortBy(s => s.length)
+          .last()
+          .length
+        }
+      app.scenes.runs.launch();
+    })
+
+    // client.goFishingIn('runs', function(fish) {
+    //   app.state.bank.cash = fish.values
+    //   app.state.bank.meta = {
+    //     name: "test",
+    //     longest: _(app.state.bank.cash)
+    //       .sortBy(s => s.length)
+    //       .last()
+    //       .length
+    //   }
+
+    //   app.scenes.test.launch();
+    // })
+    break
+  case "test":
+    client.goFishingIn('Noun Phrases!A2:Z', function(fish) {
+      var done = []
+      var v = fish.values
+          .filter(row => row[0] !== "") // check if approved (col 1)
+          .map(row => row[1]) // grab only the value
+      var filtered = thisfilter(v)
+      var out = randochunker(filtered, 4, 20)
+      // console.log(out)
+      app.state.bank.cash = out
+
+      // console.log(app.state.bank.cash)
+      app.state.bank.meta = {
+        name: "noun phrases",
+        longest: _(app.state.bank.cash)
+          .sortBy(s => s.length)
+          .last()
+          .length
+        }
+      app.scenes.test.launch();
+    })
+    break
+  }
+  // console.log(app.state.bank);
+
+  // var check = (app.debugdiv.children("p#scene").length > 0)
+  // var bugger = (check) ?
+  //     $(".debug p#scene")
+  //     : $("<p id='scene'></p>").appendTo(app.debugdiv)
+  // // console.log(bugger);
+
+  // bugger.text("scene: " + scene_name).fadeOut(3000)
+
+}
+
+
+window.onload = function(e) {
+  client.waitUntilSignedIn(false, () => {
+    console.log("signed in")
+    window.addEventListener("keypress", app.command);
+
+    app.scenes.runs.filter = function(incoming) {
+      return _.filter(incoming, (e) => {
+        // return true;
+        return e.search(/impact/i) > -1
+        // return e.search(/^th(?=[aeiou])/i) > -1 // words that start with th[vowel]
+      })
+    }
+    shuffleRunsFilter()
+    app.setScene("runs", app.scenes.runs.filter)
+
+    app.setScene("runs", app.scenes.runs.filter)
+    window.setInterval(app.refresh, 180000)
+  })
+}
+
+function randochunker(array, min, max) {
+  var out = []
+
+  while (array.length > 0) {
+    var howmany = _.random(min, max)
+    if (array.length < howmany) {
+      // if there's too few things left to chunk
+      out.push(array)
+      array = []
+    }
+    else {
+    // chunk away
+      var takers = _.times(howmany, i => i)
+      var got = _.pullAt(array,takers)
+      // got = _.sortBy(got, e=>e.length)
+      out.push(got)
+    }
+  }
+
+  return out
+}
+
+function runFinished(line, parent_num, ordered, callback) {
+  var parent_el = document.querySelector("g#runcount" + parent_num)
+  var run_length = parent_el.children.length
+  var line_num = (ordered) ? getCount(line, "line") : line // "line is either an element or a count"
+
+  if (line_num === run_length-1) {
+    callback(parent_num)
+  }
+  else return false
+}
+
+function getCount(line_el, kind) {
+  var re = new RegExp(kind + '(\\d+)', 'i')
+  var line_parent = _.find(line_el.classList, (el) => {
+    return el.search(re) != -1
+  })
+  // console.log(l)
+  return parseInt(line_parent.match(re)[1])
+}
+
+
+function shuffleRunsFilter() {
+  app.scenes.runs.filter = function(incoming) {
+    return _.sample([
+      _.filter(incoming, (e) => { return e.search(/impact/i) > -1 }),
+      _.filter(incoming, (e) => { return e.search(/creat/i) > -1 }),
+      _.filter(incoming, (e) => { return e.search(/^th(?=[aeiou])/i) > -1 })
+    ])
+  }
+}
+ // var parent_el = document.querySelector("g#runcount" + parent_num)
+ //  var l = _.find(line_el.classList, (el) => {
+ //    var re = /line(\d+)/ig
+ //    return el.search(re) != -1
+ //  })
+ //  if (l.substr(4) == enclosing_coll.length-1) {
+ //    callback(parent_num)
+ //  }
