@@ -1,0 +1,22 @@
+.indexlist {
+	padding: 30px;
+	font: normal bold 24px/2em sans-serif;
+}
+
+.indexlist ul {
+	text-align: center;
+	list-style: none;
+	padding-left: 0;
+}
+
+.indexlist a {
+	color: rgb(50,150,255);
+	text-decoration: none;
+}
+.indexlist a:hover {
+	color: rgb(50,220,150);
+	/*color: lightblue;*/
+}
+.indexlist a:active {
+	color: rgb(200,200,50);
+}
