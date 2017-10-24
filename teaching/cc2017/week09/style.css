@@ -1,0 +1,70 @@
+body {
+	background: limegreen;
+}
+
+h1 {
+	font-family: "Garamond", serif;
+    background: rgba(255, 0, 247, 0.28);
+    font-size: 162px;
+    color: white;
+}
+
+p {
+	font-family: "Helvetica Neue", Arial, sans-serif; 	
+	background: rgba(0,255,255,0.3);
+	font-size: 20px;
+	line-height: 1.2em;
+	letter-spacing: .200em;
+	/*text-transform: uppercase; */
+}
+
+.firstthree {
+	background: rgba(200,200,255,1);
+	font-weight: bold;
+	letter-spacing: .05em;
+}
+
+#special {
+	background: green;
+	padding: 50px;
+	margin: 80px;
+	border: 10px solid black;
+}
+
+#special:hover {
+	opacity: 0;
+	cursor: pointer;
+}
+#special:active {
+	background:blue;
+}
+
+#noticeme {
+	font-size:2em;
+}
+
+a {
+	color: orange;
+}
+
+a:hover {
+	color: purple;
+}
+a:active {
+	color: yellow;
+}
+/*a:visited {
+	color: grey;
+}*/
+
+a.biglink {
+	font-size: 3em;
+}
+
+
+
+
+
+
+
+
