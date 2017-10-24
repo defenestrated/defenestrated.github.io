@@ -39,6 +39,15 @@ div.box {
 	padding-left: 50px;
 }
 
+#fixed img {
+	width: 100%;
+}
+
+#fixed img:hover {
+	opacity: 0.8;
+}
+
+
 #absolute {
 	position: absolute;
 	top: 50px;
