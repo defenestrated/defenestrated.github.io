@@ -18,6 +18,53 @@ p {
 	/*text-transform: uppercase; */
 }
 
+div.box {
+	width: 200px;
+	height: 200px;
+	background: rgba(0,0,0,0.2);
+}
+
+#fixed {
+	position: fixed;
+	top: 50px;
+	left: 50px;
+}
+
+#fixed p {
+	font-family: serif;
+}
+
+#fixed p.select {
+	color: yellow;
+	padding-left: 50px;
+}
+
+#absolute {
+	position: absolute;
+	top: 50px;
+	right: 50px;
+}
+
+#relative {
+	position: relative;
+	top: 50px;
+	left: 50px;
+}
+
+.wrapper {
+	width: 50vw;
+	background: rgba(0,0,255,0.3);
+}
+
+.third {
+	width: 25%;
+	margin-right: 2%;
+	float: left;
+}
+.clear {
+	clear: both;
+}
+
 .firstthree {
 	background: rgba(200,200,255,1);
 	font-weight: bold;
@@ -25,10 +72,11 @@ p {
 }
 
 #special {
-	background: green;
+	width: 30%;
+/*	background: green;
 	padding: 50px;
 	margin: 80px;
-	border: 10px solid black;
+	border: 10px solid black;*/
 }
 
 #special:hover {
@@ -37,10 +85,6 @@ p {
 }
 #special:active {
 	background:blue;
-}
-
-#noticeme {
-	font-size:2em;
 }
 
 a {
@@ -53,14 +97,6 @@ a:hover {
 a:active {
 	color: yellow;
 }
-/*a:visited {
-	color: grey;
-}*/
-
-a.biglink {
-	font-size: 3em;
-}
-
 
 
 
