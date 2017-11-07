@@ -1,11 +1,6 @@
 var namestring = "xiujie bi,jess,vincent,analisse,inga,tiffany,qiyao,jiayi,dan,meredith,khe,yasmin,lily,yuchen,jeanette"
-
 console.log(namestring)
 
-var exampleArray = [1, 2, 3, 5, "hi", null, true]
-
-console.log(exampleArray)
-console.log(exampleArray.toString() )
 
 var nameArray = namestring.split(",")
 console.log(nameArray)
@@ -17,21 +12,20 @@ var container = document.querySelector(".output ul")
 // 	console.log(nameArray[i])
 // }
 
-nameArray.forEach(function(theElement, itsIndex, theOriginalArray) {
-	console.log(theElement + " is in position " + itsIndex)
-})
+// nameArray.forEach(function(theElement, itsIndex, theOriginalArray) {
+// 	console.log(theElement + " is in position " + itsIndex)
+// })
 
 
-nameArray.forEach(make_a_list);
+// nameArray.forEach(make_a_list);
 
+// function make_a_list(el, ix) {
+// 	var listItem = document.createElement("li")
 
-function make_a_list(el, ix) {
-	var listItem = document.createElement("li")
+// 	listItem.textContent = el + ": index " + ix
 
-	listItem.textContent = el + ": index " + ix
-
-	container.appendChild(listItem)
-}
+// 	container.appendChild(listItem)
+// }
 
 
 var names = document.querySelectorAll(".output ul li")
