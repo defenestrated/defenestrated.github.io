@@ -1,8 +1,8 @@
 var hipsterstring = "Mixtape tbh taxidermy schlitz DIY meh, tumblr trust fund shoreditch gochujang paleo palo santo. Kickstarter humblebrag kale chips celiac, vaporware gastropub migas post-ironic gluten-free snackwave synth slow-carb."
-console.log(hipsterstring)
+// console.log(hipsterstring)
 
 var hipArray = hipsterstring.split(" ")
-console.log(hipArray)
+// console.log(hipArray)
 
 // var newstring = hipArray.join("PUPPY")
 // console.log(newstring)
@@ -10,7 +10,7 @@ console.log(hipArray)
 
 var tupperware = document.querySelector(".output")
 
-console.log(tupperware)
+// console.log(tupperware)
 
 // var word1 = document.createElement("p")
 // word1.textContent = hipArray[0]
@@ -25,22 +25,25 @@ console.log(tupperware)
 // tupperware.appendChild(word3)
 
 
-for (var i = 0; i < hipArray.length; i++) {
+hipArray.forEach(buildboxes);
+
+function buildboxes(individual, number) {
+
+
 	var box = document.createElement("div")
 	var image = document.createElement("img")
 	var caption = document.createElement("p")
 
-	var tinybox = document.createElement("div")
-	var link = document.createElement("a")
+	box.classList.add("catwrapper")
+
+	box.id = "cat" + number
+
+
 
 	image.src="images/grumpy-cat.jpg"
 
-	caption.textContent = hipArray[i]
+	caption.textContent = individual
 
-	tinybox.appendChild(link)
-
-
-	box.appendChild(tinybox)
 	box.appendChild(image)
 	box.appendChild(caption)
 
@@ -48,6 +51,35 @@ for (var i = 0; i < hipArray.length; i++) {
 	tupperware.appendChild(box)
 }
 
+
+var listOfCats = document.querySelectorAll(".catwrapper")
+
+console.log(listOfCats)
+
+
+listOfCats.forEach(listen)
+
+function listen(el, ix) {
+	el.addEventListener("click", changecolor)
+}
+
+function changecolor(event) {
+	console.log(event.target.id)
+
+	var thingtochange = document.querySelector("#" + event.target.id)
+
+	if (thingtochange.classList.contains("clicked")) {
+		thingtochange.classList.remove("clicked")
+	}
+	else {
+		thingtochange.classList.add("clicked")
+	}
+
+}
+
+
+// var first = document.querySelector("#cat0")
+// first.addEventListener("click", dostuff)
 
 
 
@@ -73,7 +105,7 @@ for (var i = 0; i < hipArray.length; i++) {
 
 
 var names = document.querySelectorAll(".output ul li")
-console.log(names)
+// console.log(names)
 
 
 names.forEach(changeBackground)

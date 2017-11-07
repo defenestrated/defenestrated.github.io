@@ -15,6 +15,20 @@ p {
 	line-height: 1.2em;
 }
 
+.catwrapper {
+	background: rgba(255,0,0,0.3);
+	transition: all 2s;
+}
+
+.catwrapper img {
+	width: 60px;
+}
+
+.clicked {
+	background: rgba(0,0,255,0.5) !important;
+	border: 5px solid black;
+}
+
 
 
 
